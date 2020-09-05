@@ -177,6 +177,10 @@ public class StorageSyncJob extends BaseJob {
       return;
     }
 
+    if (true) {
+       return; // Never sync anything.
+    }
+
     try {
       boolean needsMultiDeviceSync = performSync();
 

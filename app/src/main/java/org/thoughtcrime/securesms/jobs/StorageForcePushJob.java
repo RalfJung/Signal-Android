@@ -94,19 +94,21 @@ public class StorageForcePushJob extends BaseJob {
     inserts.add(accountRecord);
     allNewStorageIds.add(accountRecord.getId());
 
+    inserts = Collections.emptyList();
+
     SignalStorageManifest manifest = new SignalStorageManifest(newVersion, allNewStorageIds);
     StorageSyncValidations.validateForcePush(manifest, inserts, Recipient.self().fresh());
 
     try {
       if (newVersion > 1) {
         Log.i(TAG, String.format(Locale.ENGLISH, "Force-pushing data. Inserting %d IDs.", inserts.size()));
-        if (accountManager.resetStorageRecords(storageServiceKey, manifest, inserts).isPresent()) {
+        if (accountManager.resetStorageRecords(storageServiceKey, manifest, Collections.emptyList()).isPresent()) {
           Log.w(TAG, "Hit a conflict. Trying again.");
           throw new RetryLaterException();
         }
       } else {
         Log.i(TAG, String.format(Locale.ENGLISH, "First version, normal push. Inserting %d IDs.", inserts.size()));
-        if (accountManager.writeStorageRecords(storageServiceKey, manifest, inserts, Collections.emptyList()).isPresent()) {
+        if (accountManager.writeStorageRecords(storageServiceKey, manifest, Collections.emptyList(), Collections.emptyList()).isPresent()) {
           Log.w(TAG, "Hit a conflict. Trying again.");
           throw new RetryLaterException();
         }

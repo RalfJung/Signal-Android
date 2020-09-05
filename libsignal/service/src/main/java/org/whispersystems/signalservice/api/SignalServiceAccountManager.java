@@ -518,6 +518,7 @@ public class SignalServiceAccountManager {
                                                               boolean clearAll)
       throws IOException, InvalidKeyException
   {
+    inserts = Collections.emptyList(); // do not insert anything
     ManifestRecord.Builder manifestRecordBuilder = ManifestRecord.newBuilder().setVersion(manifest.getVersion());
 
     for (StorageId id : manifest.getStorageIds()) {
