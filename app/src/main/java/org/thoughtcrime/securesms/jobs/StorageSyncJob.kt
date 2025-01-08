@@ -192,7 +192,7 @@ class StorageSyncJob private constructor(parameters: Parameters, private var loc
       return
     }
 
-    if (SignalStore.internal.storageServiceDisabled) {
+    if (SignalStore.internal.storageServiceDisabled || true) {
       Log.w(TAG, "Storage service has been manually disabled. Skipping.")
       return
     }
